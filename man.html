@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html lang="ro">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clothes.com - Man (Dark Mode)</title>
+    <style>
+        /* Reset și stiluri de bază */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* fundal negru închis */
+            color: #e0e0e0; /* text gri deschis */
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Header */
+        header {
+            background-color: #1f1f1f;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        }
+        header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        nav a {
+            color: #e0e0e0;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ff6600;
+        }
+        #currency-switcher {
+            padding: 0.3rem 0.6rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            background-color: #333;
+            color: #e0e0e0;
+        }
+        /* Promo banner */
+        #promo-banner {
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 10px #bb4a00;
+        }
+        #promo-banner p {
+            font-weight: 400;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 1.1rem;
+            color: #f0e5d8;
+        }
+        .cta-button {
+            background-color: #222;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 5px;
+            font-weight: 700;
+            display: inline-block;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+        .cta-button:hover {
+            background-color: #ff4500;
+        }
+        /* Slider */
+        #slider {
+            padding: 2rem 2rem 3rem 2rem;
+        }
+        #slider h2 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 5px #000;
+        }
+        .slider-container {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
+        }
+        .slide {
+            min-width: 280px;
+            background: #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgb(255 102 0 / 0.5);
+            overflow: hidden;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .slide:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgb(255 102 0 / 0.8);
+        }
+        .slide img {
+            width: 100%;
+            display: block;
+            height: 180px;
+            object-fit: cover;
+            filter: brightness(0.9);
+        }
+        .slide p {
+            margin: 0.7rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            text-align: center;
+        }
+        .add-to-cart-btn {
+            background-color: #ff6600;
+            border: none;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            margin-bottom: 0.7rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #cc5200;
+        }
+        /* Newsletter */
+        #newsletter {
+            text-align: center;
+            padding: 2rem 1rem 3rem 1rem;
+            background-color: #1f1f1f;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 450px;
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+        }
+        #newsletter h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        #newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+        #newsletter input[type="email"] {
+            padding: 0.6rem 1rem;
+            width: 300px;
+            max-width: 90%;
+            border: 1px solid #555;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+            outline: none;
+            background-color: #2a2a2a;
+            color: #eee;
+        }
+        #newsletter input[type="email"]::placeholder {
+            color: #bbb;
+        }
+        #newsletter button {
+            padding: 0.6rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            background-color: #ff6600;
+            color: white;
+            font-weight: 700;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+        #newsletter button:hover {
+            background-color: #cc5200;
+        }
+        /* Testimonials */
+        #testimonials {
+            background-color: #181818;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 700px;
+            color: #ddd;
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+        #testimonials h2 {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.9rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            text-shadow: 0 0 6px #ff6600;
+        }
+        blockquote {
+            font-style: italic;
+            margin: 1rem auto;
+            font-size: 1.1rem;
+            max-width: 600px;
+            position: relative;
+            line-height: 1.5;
+            color: #eee;
+            padding-left: 1.2rem;
+        }
+        blockquote::before {
+            content: "“";
+            font-size: 3rem;
+            color: #ff6600;
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        blockquote footer {
+            text-align: right;
+            margin-top: 0.5rem;
+            font-weight: 700;
+            color: #ff6600;
+        }
+        /* Terms & Conditions */
+        #terms {
+            max-width: 800px;
+            margin: 3rem auto;
+            background-color: #1f1f1f;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+            color: #ddd;
+        }
+        #terms h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-align: center;
+        }
+        #terms p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        /* Back to top */
+        #back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #ff6600;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.1rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.5);
+            transition: background-color 0.3s;
+            z-index: 999;
+        }
+        #back-to-top:hover {
+            background-color: #cc5200;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slider-container {
+                justify-content: center;
+            }
+            nav a {
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Clothes.com</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="man.html">Man</a>
+            <a href="female.html">Female</a>
+         
+            <select id="currency-switcher" aria-label="Schimbă moneda">
+                <option value="ron">RON</option>
+                <option value="eur">EUR</option>
+                <option value="usd">USD</option>
+            </select>
+        </nav>
+    </header>
+
+```
+<section id="promo-banner">
+    <h2>Black Friday se apropie!</h2>
+    <p>15% reducere la toate hainele pentru bărbați, femei și copii</p>
+    <a href="man.html" class="cta-button">Vezi oferta</a>
+</section>
+
+<section id="slider">
+    <h2>Slider - cele mai noi produse</h2>
+    <div class="slider-container">
+        <div class="slide">
+            <img src="img/7.jpg" alt="Produs 1" />
+           
+            <button class="add-to-cart-btn">Adaugă în coș</button>
+        </div>
+        <div class="slide">
+            <img src="img/8.jpg" alt="Produs 2" />
+          
+            <button class="add-to-cart-btn">Adaugă în coș</button>
+        </div>
+        <div class="slide">
+            <img src="img/9.jpg" alt="Produs 3" />
+           
+            <button class="add-to-cart-btn">Adaugă în coș</button>
+        </div>
+        <div class="slide">
+            <img src="img/10.jpg" alt="Produs 4" />
+            
+            <button class="add-to-cart-btn">Adaugă în coș</button>
+        </div>
+        <div class="slide">
+            <img src="img/11.jpg" alt="Produs 5" />
+           
+            <button class="add-to-cart-btn">Adaugă în coș</button>
+        </div>
+    </div>
+</section>
+
+<section id="newsletter">
+    <h2>Abonează-te la newsletter</h2>
+    <p>Primește oferte și noutăți direct în email</p>
+    <form>
+        <input type="email" placeholder="Adresa ta de email" required />
+        <button type="submit">Abonează-te</button>
+    </form>
+</section>
+
+<section id="testimonials">
+    <h2>Testimoniale</h2>
+    <blockquote>
+        "Îmi place foarte mult varietatea și calitatea produselor de pe Clothes.com. Serviciul clienți este excelent!"
+        <footer>- Andrei P.</footer>
+    </blockquote>
+    <blockquote>
+        "Livrarea a fost rapidă și produsele au fost exact ca în poze. Recomand cu drag!"
+        <footer>- Maria S.</footer>
+    </blockquote>
+</section>
+
+<section id="terms">
+    <h2>Termeni și condiții</h2>
+    <p>
+        Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza site-ul nostru.
+    </p>
+    <p>
+        1. Produsele sunt supuse disponibilității și pot fi modificate fără notificare prealabilă.
+    </p>
+    <p>
+        2. Toate prețurile includ TVA și pot fi modificate fără notificare.
+    </p>
+    <p>
+        3. Returnările se pot face în termen de 14 zile lucrătoare de la primirea produsului, conform politicii noastre.
+    </p>
+    <p>
+        4. Ne rezervăm dreptul de a modifica conținutul și serviciile oferite pe site fără notificare.
+    </p>
+    <p>
+        5. Utilizatorii sunt responsabili pentru păstrarea confidențialității datelor lor de autentificare.
+    </p>
+    <p>
+        Pentru orice întrebări referitoare la termeni și condiții, ne puteți contacta la support@clothes.com.
+    </p>
+</section>
+
+<button id="back-to-top" aria-label="Înapoi sus">↑</button>
+
+<script>
+    // Scroll to top button
+    const backToTopBtn = document.getElementById('back-to-top');
+    backToTopBtn.style.display = 'none';
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.style.display = 'block';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Currency switcher (simplificat doar pentru exemplu)
+    const currencySwitcher = document.getElementById('currency-switcher');
+    currencySwitcher.addEventListener('change', () => {
+        alert(`Moneda schimbată la ${currencySwitcher.value.toUpperCase()}. (Funcționalitate demo)`);
+        // Aici se poate adăuga logica de conversie preturi
+    });
+
+    // Form newsletter
+    const newsletterForm = document.querySelector('#newsletter form');
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailInput = newsletterForm.querySelector('input[type="email"]');
+        alert(`Mulțumim pentru abonare, ${emailInput.value}!`);
+        emailInput.value = '';
+    });
+
+    // Add to cart button demo
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            alert('Produs adăugat în coș!');
+        });
+    });
+</script>
+```
+
+</body>
+</html>
+

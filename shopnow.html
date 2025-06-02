@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clothes.com</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #fdfdfd;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode header {
+      background: #1f1f1f;
+    }
+    body.dark-mode nav a {
+      color: #e0e0e0;
+    }
+    body.dark-mode nav a:hover {
+      text-decoration: underline;
+    }
+    body.dark-mode #currency-switcher {
+      background-color: #333;
+      color: #e0e0e0;
+    }
+    body.dark-mode #promo-banner {
+      background: linear-gradient(to right, #cc9a06, #cc5c22);
+      color: #f0f0f0;
+    }
+    body.dark-mode .slide, body.dark-mode .product-card {
+      background: #1e1e1e;
+      box-shadow: 0 4px 20px rgba(255 255 255 / 0.05);
+      color: #e0e0e0;
+    }
+    body.dark-mode .product-card button {
+      background-color: #1a73e8;
+    }
+    body.dark-mode .product-card button:hover {
+      background-color: #145ab6;
+    }
+    body.dark-mode footer {
+      background: #111;
+      color: #aaa;
+    }
+    body.dark-mode footer a {
+      color: #aaa;
+    }
+    body.dark-mode footer a:hover {
+      color: white;
+    }
+
+    header {
+      background: #222;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    #currency-switcher {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      background-color: #444;
+      color: white;
+      margin-left: 15px;
+    }
+
+    #promo-banner {
+      padding: 50px 20px;
+      background: linear-gradient(to right, #ffc107, #ff7043);
+      color: white;
+    }
+
+    .cta-button {
+      background: #ffffff;
+      color: #ff7043;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      background: #ffe0b2;
+    }
+
+    .slider-container {
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .slide {
+      width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      background: white;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px 12px 0 0;
+      /* Lazy loading handled via loading attribute */
+    }
+
+    .slide p {
+      padding: 10px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .recommended-products {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 15px;
+      width: 220px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-card button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 6px;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card button:hover {
+      background-color: #0056b3;
+    }
+
+    .category-btn {
+      background-color: #6c757d;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      margin: 10px 5px;
+    }
+
+    .category-btn:hover {
+      background-color: #343a40;
+    }
+
+    footer {
+      background: #111;
+      color: white;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 40px 10px;
+      font-size: 14px;
+    }
+
+    footer div {
+      min-width: 150px;
+      margin-bottom: 20px;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      display: block;
+      margin: 4px 0;
+    }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    /* Search bar styling */
+    #search-container {
+      margin-left: 20px;
+      flex-grow: 1;
+      max-width: 300px;
+      position: relative;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 8px 35px 8px 12px;
+      border-radius: 20px;
+      border: none;
+      font-size: 14px;
+    }
+
+    #search-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48;
+      color: #888;
+      pointer-events: none;
+      font-family: 'Material Symbols Outlined';
+      font-size: 20px;
+    }
+
+    /* Breadcrumb */
+    #breadcrumb {
+      padding: 10px 30px;
+      background: #eee;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      user-select: none;
+    }
+    body.dark-mode #breadcrumb {
+      background: #222;
+      color: #bbb;
+    }
+    #breadcrumb a {
+      color: #007bff;
+      text-decoration: none;
+      margin-right: 5px;
+    }
+    #breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    #breadcrumb span.separator {
+      margin-right: 5px;
+      color: #999;
+    }
+
+    /* Back to top button */
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1001;
+      transition: background-color 0.3s;
+    }
+    #back-to-top:hover {
+      background: #0056b3;
+    }
+
+    /* Social Icons footer */
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .social-icons a {
+      color: #ccc;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
+    .social-icons a:hover {
+      color: white;
+    }
+
+    /* Testimonials */
+    #testimonials {
+      background: #f9f9f9;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    body.dark-mode #testimonials {
+      background: #1e1e1e;
+      color: #ddd;
+    }
+    #testimonials h2 {
+      margin-bottom: 30px;
+    }
+    .testimonial-card {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      background: white;
+      font-style: italic;
+      color: #444;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode .testimonial-card {
+      background: #2c2c2c;
+      color: #ccc;
+    }
+    .testimonial-card p {
+      margin: 0 0 10px;
+    }
+    .testimonial-card cite {
+      font-weight: 600;
+      color: #666;
+    }
+    body.dark-mode .testimonial-card cite {
+      color: #aaa;
+    }
+
+    /* Feedback message on add to cart */
+    .feedback-message {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #28a745;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .feedback-message.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Clothes.com</h1>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="man.html">Man</a>
+      <a href="female.html">Female</a>
+      
+   
+    </nav>
+
+    <!-- Search bar -->
+    <div id="search-container">
+      <input type="search" id="search-input" placeholder="Search products..." aria-label="Search products" />
+      <span id="search-icon" class="material-symbols-outlined">search</span>
+    </div>
+
+    <!-- Currency Switcher Dropdown -->
+    <select id="currency-switcher">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
+    </select>
+
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode-toggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" style="margin-left:15px; background:none; border:none; color:white; cursor:pointer; font-size:24px; line-height:1;">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">dark_mode</span>
+    </button>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav id="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="separator">/</span>
+    <a href="man.html">Man</a>
+    <span class="separator">/</span>
+    <span>Clothes</span>
+  </nav>
+
+  <section id="promo-banner">
+    <h2>Discover the best clothes for every occasion</h2>
+    <a href="man.html" class="cta-button">Shop Man's Clothes</a>
+  </section>
+
+  <!-- Slider (existing) -->
+  <div class="slider-container" aria-label="Image slider">
+    <div class="slide">
+      <img src="img/1.jpg" alt="Clothing item 1" loading="lazy" />
+      <p>Stylish Jacket</p>
+    </div>
+    <div class="slide">
+      <img src="img/2.jpg" alt="Clothing item 2" loading="lazy" />
+      <p>Elegant Dress</p>
+    </div>
+    <div class="slide">
+      <img src="img/3.jpg" alt="Clothing item 3" loading="lazy" />
+      <p>Casual Shirt</p>
+    </div>
+  </div>
+
+  <!-- Recommended products -->
+  <section class="recommended-products" aria-label="Recommended for you">
+    <div class="product-card">
+      <img src="img/4.jpg" alt="Red T-shirt" loading="lazy" />
+      <p>Red T-shirt</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+      <div class="feedback-message">Added!</div>
+    </div>
+    <div class="product-card">
+      <img src="img/5.jpg" alt="Blue Jeans" loading="lazy" />
+      <p>Blue Jeans</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+      <div class="feedback-message">Added!</div>
+    </div>
+    <div class="product-card">
+      <img src="img/6.jpg" alt="Black Hat" loading="lazy" />
+      <p>Black Hat</p>
+      <button class="add-to-cart-btn">Add to Cart</button>
+      <div class="feedback-message">Added!</div>
+    </div>
+  </section>
+
+  <!-- Testimonials section -->
+  <section id="testimonials" aria-label="Customer testimonials">
+    <h2>What our customers say</h2>
+    <div class="testimonial-card">
+      <p>"I absolutely love the quality and style of these clothes. Highly recommend!"</p>
+      <cite>- Sarah J.</cite>
+    </div>
+    <div class="testimonial-card">
+      <p>"Fast delivery and great customer service. I will definitely shop here again."</p>
+      <cite>- Mark D.</cite>
+    </div>
+    <div class="testimonial-card">
+      <p>"The variety of clothes is amazing, and the prices are very reasonable."</p>
+      <cite>- Anna K.</cite>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <h3>About Us</h3>
+      <p>We are committed to offering the best fashion products.</p>
+    </div>
+    <div>
+      <h3>Customer Service</h3>
+      <a href="#">Contact Us</a>
+      <a href="#">Returns</a>
+      <a href="#">FAQs</a>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <div class="social-icons" aria-label="Social media links">
+        <a href="#" aria-label="Facebook" title="Facebook">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:24px;">facebook</span>
+        </a>
+        <a href="#" aria-label="Instagram" title="Instagram">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:24px;">instagram</span>
+        </a>
+        <a href="#" aria-label="Twitter" title="Twitter">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:24px;">twitter</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top button -->
+  <button id="back-to-top" aria-label="Back to top" title="Back to top">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:28px;">arrow_upward</span>
+  </button>
+
+  <script>
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Back to top button show/hide & scroll to top
+    const backToTopBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Add to Cart feedback message
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const feedback = btn.nextElementSibling;
+        feedback.classList.add('show');
+        setTimeout(() => {
+          feedback.classList.remove('show');
+        }, 1500);
+      });
+    });
+
+    // Search filter for recommended products
+    const searchInput = document.getElementById('search-input');
+    const productCards = document.querySelectorAll('.recommended-products .product-card');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      productCards.forEach(card => {
+        const text = card.querySelector('p').textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
